@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HiNote</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f0f2f5;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .top-section {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .sidebar {
+            width: 20%;
+            background-color: #2c3e50;
+            margin-top: 70px;
+            border-radius: 10px;
+            color: #ecf0f1;
+            padding: 20px;
+            box-shadow: 4px 0 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .sidebar .link {
+            display: block;
+            margin-bottom: 20px;
+            color: #ecf0f1;
+            text-decoration: none;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .sidebar .link:hover {
+            color: #3498db;
+        }
+
+        .content {
+            width: 75%;
+            padding: 20px;
+            margin-top: 70px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .text-box {
+            margin-bottom: 20px; 
+        }
+
+        .text-box input,
+        .text-box div[contenteditable] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #bdc3c7;
+            border-radius: 5px;
+            box-sizing: border-box;
+            outline: none;
+            line-height: 2;
+            transition: border-color 0.3s, box-shadow 0.3s;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        .text-box input:focus,
+        .text-box div[contenteditable]:focus {
+            border-color: #3498db;
+            box-shadow: 0 0 8px rgba(52, 152, 219, 0.3);
+        }
+
+        .text-box div[contenteditable] {
+            min-height: 50px;
+            overflow: hidden;
+        }
+
+        .text-box img, .qa-row img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .add-button {
+            display: block;
+            width: auto;
+            padding: 10px 20px;
+            margin: 10px 0;
+            background-color: #3498db;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: background-color 0.3s, box-shadow 0.3s;
+        }
+
+        .add-button:hover {
+            background-color: #2980b9;
+            box-shadow: 0 4px 8px rgba(41, 128, 185, 0.2);
+        }
+
+        .qa-section {
+            margin-top: 20px;
+            background-color: #fff;
+            padding: 10px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .qa-row {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            position: relative;
+        }
+
+        .qa-row div[contenteditable] {
+            width: 50%;
+            padding: 15px;
+            border: 1px solid #bdc3c7;
+            border-radius: 0px;
+            box-sizing: border-box;
+            overflow: hidden;
+            outline: none;
+            transition: border-color 0.3s, box-shadow 0.3s;
+            min-height: 50px;
+        }
+
+        .qa-row div[contenteditable]:focus {
+            border-color: #3498db;
+            box-shadow: 0 0 8px rgba(52, 152, 219, 0.3);
+        }
+
+        .qa-row .exceed-alert {
+            display: none;
+            color: red;
+            font-weight: bold;
+            position: absolute;
+            right: 10px;
+            top: 10px;
+        }
+
+        .qa-row div[contenteditable].exceed + .exceed-alert {
+            display: block;
+        }
+
+        .exceed-left-alert {
+            display: none;
+            color: red;
+            font-weight: bold;
+            position: absolute;
+            left: -25px;
+            top: 10px;
+        }
+
+        .qa-row div[contenteditable].exceed ~ .exceed-left-alert {
+            display: block;
+        }
+
+        .title-input {
+            font-weight: bold;
+            color: #005eff;
+            font-size: 1.2em;
+        }
+
+        input:not(:placeholder-shown),
+        div[contenteditable]:not(:empty) {
+            border: none;
+        }
+
+        input:not(:placeholder-shown):hover,
+        div[contenteditable]:not(:empty):hover {
+            border: 1px solid #bdc3c7;
+        }
+
+        .toolbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: #2c3e50;
+            color: #ecf0f1;
+            padding: 15px 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            white-space: nowrap;
+            overflow-x: auto;
+        }
+
+        .toolbar button {
+            margin: 0px 5px;
+            padding: 5px 10px;
+            background-color: #3498db;
+            color: #fff;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+            transition: background-color 0.3s, box-shadow 0.3s;
+        }
+
+        .toolbar button:hover {
+            background-color: #2980b9;
+            box-shadow: 0 4px 8px rgba(41, 128, 185, 0.2);
+        }
+
+        .toolbar .color-picker {
+            display: flex;
+            align-items: center;
+        }
+
+        .toolbar .color-picker button {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            margin: 0 2px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .toolbar .color-picker button.black {
+            background-color: black;
+        }
+
+        .toolbar .color-picker button.red {
+            background-color: red;
+        }
+
+        .toolbar .color-picker button.blue {
+            background-color: blue;
+        }
+
+        .toolbar .color-picker button.green {
+            background-color: green;
+        }
+
+        .toolbar .color-picker button.yellow {
+            background-color: #ffc800;
+        }
+
+        .toolbar .indent-buttons button {
+            font-size: 18px;
+        }
+
+        .toolbar .indent-buttons button.indent-increase::before {
+            content: '↪';
+        }
+
+        .toolbar .indent-buttons button.indent-decrease::before {
+            content: '↩';
+        }
+
+        .toolbar .list-buttons button {
+            font-size: 18px;
+        }
+
+        .toolbar .list-buttons button.bullet-list::before {
+            content: '•';
+        }
+
+        .toolbar .list-buttons button.numbered-list::before {
+            content: '1.';
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .toolbar .title {
+            font-weight: ;
+            font-family: Brush Script MT;
+            color: white;
+            font-size: 1.7em;
+            margin-right: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .toolbar .subtitle {
+            font-size: 0.7em;
+            margin-right: 50px;
+        }
+
+        .toolbar .google-search {
+            display: flex;
+            align-items: center;
+        }
+
+        .toolbar .google-search input[type="text"] {
+            width: 200px;
+            padding: 6px;
+            border: 1px solid #bdc3c7;
+            border-radius: 10px;
+          margin-right: 0px;
+            box-sizing: border-box;
+            outline: none;
+            transition: border-color 0.3s, box-shadow 0.3s;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        .toolbar .google-search button {
+            padding: 8px 10px;
+            background-color: #3498db;
+            color: #fff;
+            border: none;
+            margin: 0px 30px 0px 0px;
+            border-radius: 15px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: bold;
+            transition: background-color 0.3s, box-shadow 0.3s;
+        }
+
+        .toolbar .google-search button:hover {
+            background-color: #2980b9;
+            box-shadow: 0 4px 8px rgba(41, 128, 185, 0.2);
+        }
+    </style>
+</head>
+<body>
+    <div class="toolbar">
+        <div class="title">Hi Note</div>
+        <div class="subtitle">by Felipe Dias</div>
+        <button onclick="applyBold()">Bold</button>
+        <div class="color-picker">
+            <button class="black" onclick="applyColor('black')"></button>
+            <button class="red" onclick="applyColor('red')"></button>
+            <button class="blue" onclick="applyColor('blue')"></button>
+            <button class="green" onclick="applyColor('green')"></button>
+            <button class="yellow" onclick="applyColor('#ffc800')"></button>
+        </div>
+        <div class="indent-buttons">
+            <button class="indent-increase" onclick="applyIndent('increase')"></button>
+            <button class="indent-decrease" onclick="applyIndent('decrease')"></button>
+        </div>
+        <div class="list-buttons">
+            <button class="bullet-list" onclick="applyList('bullet')"></button>
+            <button class="numbered-list" onclick="applyList('numbered')"></button>
+        </div>
+        <button class="add-button" onclick="addNewTextBox()">+ caixa texto</button>
+        <button class="add-button" onclick="addNewQARow()">+ pergunta</button>
+        <button onclick="printPage()">Salvar</button>
+        <div class="google-search">
+            <form action="https://www.google.com/search" method="get" target="popup" onsubmit="window.open('https://www.google.com/search?q=' + this.q.value, 'popup', 'width=800,height=600'); return false;">
+                <input type="text" name="q" placeholder="pesquisar no Google">
+                <button type="submit">🔍</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="top-section">
+            <div class="sidebar" id="sidebar">
+            </div>
+            <div class="content" id="content">
+                <div class="text-box">
+                    <input type="text" placeholder="Título 1" class="title-input" data-id="title1" oninput="updateLinks()">
+                    <div contenteditable="true" onpaste="handlePaste(event)" placeholder="Caixa de digitação 1"></div>
+                </div>
+                <div class="text-box">
+                    <input type="text" placeholder="Título 2" class="title-input" data-id="title2" oninput="updateLinks()">
+                    <div contenteditable="true" onpaste="handlePaste(event)" placeholder="Caixa de digitação 2"></div>
+                </div>
+                <div class="text-box">
+                    <input type="text" placeholder="Título 3" class="title-input" data-id="title3" oninput="updateLinks()">
+                    <div contenteditable="true" onpaste="handlePaste(event)" placeholder="Caixa de digitação 3"></div>
+                </div>
+            </div>
+        </div>
+
+        <div id="qa-section" class="qa-section">
+            <div class="qa-row">
+                <div contenteditable="true" onpaste="handlePaste(event)" placeholder="Pergunta"></div>
+                <span class="exceed-alert">!</span>
+                <span class="exceed-left-alert">!</span>
+                <div contenteditable="true" onpaste="handlePaste(event)" placeholder="Resposta"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function updateLinks() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.innerHTML = ''; // Limpa os links existentes
+            const titleInputs = document.querySelectorAll('.title-input');
+            titleInputs.forEach(input => {
+                if (input.value.trim() !== '') {
+                    const link = document.createElement('a');
+                    link.textContent = input.value;
+                    link.href = '#' + input.getAttribute('data-id');
+                    link.classList.add('link');
+                    sidebar.appendChild(link);
+                }
+            });
+        }
+
+        function addNewTextBox() {
+            const content = document.getElementById('content');
+            const newTextBox = document.createElement('div');
+            newTextBox.classList.add('text-box');
+
+            const newTitleInput = document.createElement('input');
+            newTitleInput.type = 'text';
+            newTitleInput.placeholder = 'Novo Título';
+            newTitleInput.classList.add('title-input');
+            newTitleInput.setAttribute('data-id', 'title' + (document.querySelectorAll('.title-input').length + 1));
+            newTitleInput.addEventListener('input', updateLinks);
+
+            const newTextArea = document.createElement('div');
+            newTextArea.contentEditable = true;
+            newTextArea.setAttribute('onpaste', 'handlePaste(event)');
+            newTextArea.placeholder = 'Nova Caixa de Digitação';
+
+            newTextBox.appendChild(newTitleInput);
+                       newTextBox.appendChild(newTextArea);
+            content.appendChild(newTextBox);
+        }
+
+        function addNewQARow() {
+            const qaSection = document.getElementById('qa-section');
+            const newQARow = document.createElement('div');
+            newQARow.classList.add('qa-row');
+
+            const newQuestion = document.createElement('div');
+            newQuestion.contentEditable = true;
+            newQuestion.setAttribute('onpaste', 'handlePaste(event)');
+            newQuestion.placeholder = 'Nova Pergunta';
+
+            const exceedAlert = document.createElement('span');
+            exceedAlert.classList.add('exceed-alert');
+            exceedAlert.textContent = '!';
+
+            const exceedLeftAlert = document.createElement('span');
+            exceedLeftAlert.classList.add('exceed-left-alert');
+            exceedLeftAlert.textContent = '!';
+
+            const newAnswer = document.createElement('div');
+            newAnswer.contentEditable = true;
+            newAnswer.setAttribute('onpaste', 'handlePaste(event)');
+            newAnswer.placeholder = 'Nova Resposta';
+
+            newQARow.appendChild(newQuestion);
+            newQARow.appendChild(exceedAlert);
+            newQARow.appendChild(exceedLeftAlert);
+            newQARow.appendChild(newAnswer);
+            qaSection.appendChild(newQARow);
+        }
+
+        function handlePaste(event) {
+            event.preventDefault();
+            const clipboardData = event.clipboardData || window.clipboardData;
+            const text = clipboardData.getData('text/plain');
+            const image = clipboardData.items && clipboardData.items.length > 0 && clipboardData.items[0].type.indexOf('image') !== -1 ? clipboardData.items[0].getAsFile() : null;
+
+            if (text) {
+                document.execCommand('insertText', false, text);
+            }
+
+            if (image) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    const img = new Image();
+                    img.src = e.target.result;
+                    document.execCommand('insertImage', false, img.src);
+                }
+                reader.readAsDataURL(image);
+            }
+        }
+
+        function applyBold() {
+            document.execCommand('bold', false, null);
+        }
+
+        function applyColor(color) {
+            document.execCommand('foreColor', false, color);
+        }
+
+        function applyIndent(type) {
+            if (type === 'increase') {
+                document.execCommand('indent', false, null);
+            } else {
+                document.execCommand('outdent', false, null);
+            }
+        }
+
+        function applyList(type) {
+            if (type === 'bullet') {
+                document.execCommand('insertUnorderedList', false, null);
+            } else {
+                document.execCommand('insertOrderedList', false, null);
+            }
+        }
+
+        function printPage() {
+            window.print();
+        }
+    </script>
+</body>
+</html>
