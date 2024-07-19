@@ -59,6 +59,7 @@
             background-color: #fff;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border: 2px solid #808b96;
         }
 
         .text-box {
@@ -119,6 +120,7 @@
             background-color: #fff;
             padding: 10px;
             border-radius: 10px;
+            border: 2px solid #808b96;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
 
@@ -338,7 +340,7 @@
     <div class="toolbar">
         <div class="title">Hi Note</div>
         <div class="subtitle">by Felipe Dias</div>
-        <button onclick="applyBold()">Bold</button>
+        <button onclick="applyBold()">B</button>
         <div class="color-picker">
             <button class="black" onclick="applyColor('black')"></button>
             <button class="red" onclick="applyColor('red')"></button>
@@ -354,8 +356,8 @@
             <button class="bullet-list" onclick="applyList('bullet')"></button>
             <button class="numbered-list" onclick="applyList('numbered')"></button>
         </div>
-        <button class="add-button" onclick="addNewTextBox()">+ caixa texto</button>
-        <button class="add-button" onclick="addNewQARow()">+ pergunta</button>
+        <button class="add-button" onclick="addNewTextBox()">+ texto</button>
+        <button class="add-button" onclick="addNewQARow()">+ questão</button>
         <button onclick="printPage()">Salvar</button>
         <div class="google-search">
             <form action="https://www.google.com/search" method="get" target="popup" onsubmit="window.open('https://www.google.com/search?q=' + this.q.value, 'popup', 'width=800,height=400,top=' + (screen.height - 400) / 2 + ',left=' + (screen.width - 600) / 2); return false;">
