@@ -211,7 +211,7 @@
             background-color: #3498db;
             color: #fff;
             border: none;
-            border-radius: 15px;
+            border-radius: 35px;
             cursor: pointer;
             font-size: 14px;
             font-weight: bold;
@@ -262,11 +262,11 @@
         }
 
         .toolbar .indent-buttons button.indent-increase::before {
-            content: '↪';
+            content: '▸≡';
         }
 
         .toolbar .indent-buttons button.indent-decrease::before {
-            content: '↩';
+            content: '≡◂';
         }
 
         .toolbar .list-buttons button {
@@ -274,7 +274,7 @@
         }
 
         .toolbar .list-buttons button.bullet-list::before {
-            content: '•';
+            content: '•  ';
         }
 
         .toolbar .list-buttons button.numbered-list::before {
@@ -286,7 +286,6 @@
         }
 
         .toolbar .title {
-            font-weight: ;
             font-family: Brush Script MT;
             color: white;
             font-size: 1.7em;
@@ -309,7 +308,7 @@
             padding: 6px;
             border: 1px solid #bdc3c7;
             border-radius: 10px;
-          margin-right: 0px;
+            margin-left: 10px;
             box-sizing: border-box;
             outline: none;
             transition: border-color 0.3s, box-shadow 0.3s;
@@ -359,7 +358,7 @@
         <button class="add-button" onclick="addNewQARow()">+ pergunta</button>
         <button onclick="printPage()">Salvar</button>
         <div class="google-search">
-            <form action="https://www.google.com/search" method="get" target="popup" onsubmit="window.open('https://www.google.com/search?q=' + this.q.value, 'popup', 'width=800,height=600'); return false;">
+            <form action="https://www.google.com/search" method="get" target="popup" onsubmit="window.open('https://www.google.com/search?q=' + this.q.value, 'popup', 'width=800,height=400,top=' + (screen.height - 400) / 2 + ',left=' + (screen.width - 600) / 2); return false;">
                 <input type="text" name="q" placeholder="pesquisar no Google">
                 <button type="submit">🔍</button>
             </form>
