@@ -377,22 +377,14 @@
         <div class="top-section">
             <div class="sidebar" id="sidebar">
             </div>
-            <div class="content" id="content">
+            <div class="content" id="content">      
                 <div class="text-box">
+                  <input type="text" placeholder="Assunto" class="title-input" data-id="title1" oninput="updateLinks()">
                     <input type="text" placeholder="Título 1" class="title-input" data-id="title1" oninput="updateLinks()">
                     <div contenteditable="true" onpaste="handlePaste(event)" placeholder="Caixa de digitação 1"></div>
                 </div>
-                <div class="text-box">
-                    <input type="text" placeholder="Título 2" class="title-input" data-id="title2" oninput="updateLinks()">
-                    <div contenteditable="true" onpaste="handlePaste(event)" placeholder="Caixa de digitação 2"></div>
-                </div>
-                <div class="text-box">
-                    <input type="text" placeholder="Título 3" class="title-input" data-id="title3" oninput="updateLinks()">
-                    <div contenteditable="true" onpaste="handlePaste(event)" placeholder="Caixa de digitação 3"></div>
-                </div>
             </div>
         </div>
-
         <div id="qa-section" class="qa-section">
             <div class="qa-row">
                 <div contenteditable="true" onpaste="handlePaste(event)" placeholder="Pergunta"></div>
