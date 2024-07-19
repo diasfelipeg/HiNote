@@ -30,8 +30,8 @@
 
         .sidebar {
             width: 20%;
-            background-color: #2c3e50;
-            margin-top: 70px;
+            background-color: #5988d6;
+            margin-top: 80px;
             border-radius: 10px;
             color: #ecf0f1;
             padding: 20px;
@@ -41,7 +41,7 @@
         .sidebar .link {
             display: block;
             margin-bottom: 20px;
-            color: #ecf0f1;
+            color: white;
             text-decoration: none;
             font-weight: bold;
             cursor: pointer;
@@ -55,11 +55,11 @@
         .content {
             width: 75%;
             padding: 20px;
-            margin-top: 70px;
+            margin-top: 80px;
             background-color: #fff;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            border: 2px solid #808b96;
+            border: 2px solid #5988d6;
         }
 
         .text-box {
@@ -120,7 +120,7 @@
             background-color: #fff;
             padding: 10px;
             border-radius: 10px;
-            border: 2px solid #808b96;
+            border: 2px solid #5988d6;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
 
@@ -192,12 +192,15 @@
 
         .toolbar {
             position: fixed;
-            top: 0;
+            top: 20px;
             left: 0;
-            width: 100%;
-            background-color: #2c3e50;
+            right: 0;
+            width: 70%;
+            margin: auto;
+            border-radius: 20px;
+            background-color: #f9f9f9;
             color: #ecf0f1;
-            padding: 15px 20px;
+            padding: 7px 20px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             z-index: 1000;
             display: flex;
@@ -210,18 +213,18 @@
         .toolbar button {
             margin: 0px 5px;
             padding: 5px 10px;
-            background-color: #3498db;
-            color: #fff;
+            background-color: #f9f9f9;
+            color: #5988d0;
             border: none;
             border-radius: 35px;
             cursor: pointer;
-            font-size: 14px;
+            font-size: 16px;
             font-weight: bold;
             transition: background-color 0.3s, box-shadow 0.3s;
         }
 
         .toolbar button:hover {
-            background-color: #2980b9;
+            background-color: #9ad1ff;
             box-shadow: 0 4px 8px rgba(41, 128, 185, 0.2);
         }
 
@@ -260,7 +263,7 @@
         }
 
         .toolbar .indent-buttons button {
-            font-size: 18px;
+            font-size: 16px;
         }
 
         .toolbar .indent-buttons button.indent-increase::before {
@@ -272,7 +275,7 @@
         }
 
         .toolbar .list-buttons button {
-            font-size: 18px;
+            font-size: 16px;
         }
 
         .toolbar .list-buttons button.bullet-list::before {
@@ -290,15 +293,16 @@
         .toolbar .title {
             font-family: Arial;
             font-weight: bold;
-            color: white;
+            color: #1e94ff;
             font-size: 1.7em;
-            margin-right: 10px;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            margin-right: 5px;
+
         }
 
         .toolbar .subtitle {
-            font-size: 0.7em;
-            margin-right: 50px;
+            font-size: 0.55em;
+            color: #dedede;
+            margin-right: 20px;
         }
 
         .toolbar .google-search {
@@ -307,7 +311,7 @@
         }
 
         .toolbar .google-search input[type="text"] {
-            width: 200px;
+            width: 136px;
             padding: 6px;
             border: 1px solid #bdc3c7;
             border-radius: 10px;
@@ -319,20 +323,19 @@
         }
 
         .toolbar .google-search button {
-            padding: 8px 10px;
-            background-color: #3498db;
-            color: #fff;
+            padding: 7px 9px;
+            background-color: #f9f9f9;
+            color: #5988d0;
             border: none;
-            margin: 0px 30px 0px 0px;
             border-radius: 15px;
             cursor: pointer;
-            font-size: 12px;
+            font-size: 14px;
             font-weight: bold;
             transition: background-color 0.3s, box-shadow 0.3s;
         }
 
         .toolbar .google-search button:hover {
-            background-color: #2980b9;
+            background-color: #9ad1ff;
             box-shadow: 0 4px 8px rgba(41, 128, 185, 0.2);
         }
     </style>
@@ -357,8 +360,8 @@
             <button class="bullet-list" onclick="applyList('bullet')"></button>
             <button class="numbered-list" onclick="applyList('numbered')"></button>
         </div>
-        <button class="add-button" onclick="addNewTextBox()">+ texto</button>
-        <button class="add-button" onclick="addNewQARow()">+ questão</button>
+        <button class="add-button" onclick="addNewTextBox()">+ T</button>
+        <button class="add-button" onclick="addNewQARow()">+ Q</button>
         <button onclick="printPage()">Salvar</button>
         <div class="google-search">
             <form action="https://www.google.com/search" method="get" target="popup" onsubmit="window.open('https://www.google.com/search?q=' + this.q.value, 'popup', 'width=800,height=400,top=' + (screen.height - 400) / 2 + ',left=' + (screen.width - 600) / 2); return false;">
