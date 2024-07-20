@@ -71,7 +71,8 @@
         .text-box div[contenteditable] {
             width: 100%;
             padding: 10px;
-            border: 1px solid #bdc3c7;
+            border: 1px solid #e3e3e3;
+            color: #4f4f4f;
             border-radius: 5px;
             box-sizing: border-box;
             outline: none;
@@ -135,12 +136,13 @@
         .qa-row div[contenteditable] {
             width: 50%;
             padding: 10px;
-            border: 1px solid #bdc3c7;
+            border: 1px solid #e3e3e3;
             border-radius: 0px;
             box-sizing: border-box;
             overflow: hidden;
+            color: #4f4f4f;
             outline: none;
-                      line-height: 2;
+            line-height: 2;
             transition: border-color 0.3s, box-shadow 0.3s;
             min-height: 50px;
         }
@@ -245,7 +247,7 @@
         }
 
         .toolbar .color-picker button.black {
-            background-color: black;
+            background-color: #4f4f4f;
         }
 
         .toolbar .color-picker button.red {
@@ -348,7 +350,7 @@
         <div class="subtitle">by Felipe Dias</div>
         <button onclick="applyBold()">B</button>
         <div class="color-picker">
-            <button class="black" onclick="applyColor('black')"></button>
+            <button class="black" onclick="applyColor('#4f4f4f')"></button>
             <button class="red" onclick="applyColor('red')"></button>
             <button class="blue" onclick="applyColor('blue')"></button>
             <button class="green" onclick="applyColor('green')"></button>
