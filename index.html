@@ -380,6 +380,76 @@
             background-color: #9ad1ff;
             box-shadow: 0 4px 8px rgba(41, 128, 185, 0.2);
         }
+      
+    .bottom-section {
+        width: 92%;
+        margin: 20px auto;
+        padding: 20px;
+        background-color: rgba(255, 255, 255, 0.9); /* Caixa de comentários com fundo branco e 90% de opacidade */
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        box-sizing: border-box; /* Garante que o padding e border sejam incluídos na largura total */
+    }
+
+    .bottom-section .comments {
+        display: flex;
+        flex-direction: column;
+        height: 300px; /* Define uma altura fixa para a área de comentários, ajuste conforme necessário */
+        overflow-y: auto; /* Adiciona barra de rolagem vertical se necessário */
+        overflow-x: hidden; /* Remove a barra de rolagem horizontal */
+    }
+
+    .bottom-section .comments textarea {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #e3e3e3;
+        border-radius: 5px;
+        box-sizing: border-box; /* Garante que o padding e border sejam incluídos na largura total */
+        margin-bottom: 10px;
+        font-family: 'Roboto', sans-serif;
+        resize: vertical;
+        min-height: 100px;
+        outline: none;
+        line-height: 1.5;
+        overflow-y: auto; /* Adiciona rolagem se o texto exceder o tamanho da caixa */
+        word-wrap: break-word; /* Garante que o texto quebre em palavras e não crie rolagem horizontal */
+    }
+
+    .bottom-section .comments button {
+        padding: 10px 20px;
+        background-color: #3498db;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+        font-weight: bold;
+        transition: background-color 0.3s, box-shadow 0.3s;
+    }
+
+    .bottom-section .comments button:hover {
+        background-color: #2980b9;
+        box-shadow: 0 4px 8px rgba(41, 128, 185, 0.2);
+    }
+
+    .bottom-section .comments .comment {
+        padding: 10px;
+        border: 1px solid #e3e3e3;
+        border-radius: 5px;
+        margin-bottom: 10px;
+        background-color: rgba(255, 255, 255, 0.9); /* Comentário com fundo branco e 90% de opacidade */
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        box-sizing: border-box; /* Garante que o padding e border sejam incluídos na largura total */
+        word-wrap: break-word; /* Garante que o texto quebre em palavras e não crie rolagem horizontal */
+    }
+
+    .bottom-section .comments .comment-time {
+        display: block;
+        font-size: 0.8em;
+        color: #7f8c8d;
+        margin-top: 5px;
+    }
+
     </style>
 </head>
 <body>
@@ -434,6 +504,17 @@
             </div>
         </div>
     </div>
+<div class="bottom-section">
+    <div class="footer-text">By Felipe G. Dias</div>
+    <div class="comments">
+        <div class="comment">
+            <p>Comentário exemplo</p>
+            <span class="comment-time">Publicado há X minutos</span>
+        </div>
+        <textarea placeholder="Escreva um comentário..."></textarea>
+        <button>Enviar Comentário</button>
+    </div>
+</div>
 
     <script>
         function updateLinks() {
@@ -551,6 +632,47 @@
         function printPage() {
             window.print();
         }
+      
+      const commentTextarea = document.querySelector('.bottom-section .comments textarea');
+const commentButton = document.querySelector('.bottom-section .comments button');
+const commentsContainer = document.querySelector('.bottom-section .comments');
+
+// Função para salvar comentários no localStorage
+function saveComments() {
+    const comments = Array.from(commentsContainer.querySelectorAll('.comment')).map(comment => ({
+        text: comment.querySelector('p').textContent,
+        time: comment.querySelector('.comment-time').textContent
+    }));
+    localStorage.setItem('comments', JSON.stringify(comments));
+}
+
+// Função para carregar comentários do localStorage
+function loadComments() {
+    const savedComments = JSON.parse(localStorage.getItem('comments') || '[]');
+    savedComments.forEach(comment => {
+        const commentDiv = document.createElement('div');
+        commentDiv.classList.add('comment');
+        commentDiv.innerHTML = `<p>${comment.text}</p><span class="comment-time">${comment.time}</span>`;
+        commentsContainer.insertBefore(commentDiv, commentTextarea);
+    });
+}
+
+// Adicionar um novo comentário
+commentButton.addEventListener('click', () => {
+    const commentText = commentTextarea.value.trim();
+    if (commentText) {
+        const commentDiv = document.createElement('div');
+        commentDiv.classList.add('comment');
+        commentDiv.innerHTML = `<p>${commentText}</p><span class="comment-time">Publicado há poucos minutos</span>`;
+        commentsContainer.insertBefore(commentDiv, commentTextarea);
+        commentTextarea.value = '';
+        saveComments(); // Salva os comentários no localStorage
+    }
+});
+
+// Carregar comentários ao iniciar a página
+loadComments();
+
     </script>
 </body>
 </html>
