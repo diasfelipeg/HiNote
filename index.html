@@ -380,76 +380,6 @@
             background-color: #9ad1ff;
             box-shadow: 0 4px 8px rgba(41, 128, 185, 0.2);
         }
-      
-    .bottom-section {
-        width: 92%;
-        margin: 20px auto;
-        padding: 20px;
-        background-color: rgba(255, 255, 255, 0.9); /* Caixa de comentários com fundo branco e 90% de opacidade */
-        border-radius: 10px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        box-sizing: border-box; /* Garante que o padding e border sejam incluídos na largura total */
-    }
-
-    .bottom-section .comments {
-        display: flex;
-        flex-direction: column;
-        height: 300px; /* Define uma altura fixa para a área de comentários, ajuste conforme necessário */
-        overflow-y: auto; /* Adiciona barra de rolagem vertical se necessário */
-        overflow-x: hidden; /* Remove a barra de rolagem horizontal */
-    }
-
-    .bottom-section .comments textarea {
-        width: 100%;
-        padding: 10px;
-        border: 1px solid #e3e3e3;
-        border-radius: 5px;
-        box-sizing: border-box; /* Garante que o padding e border sejam incluídos na largura total */
-        margin-bottom: 10px;
-        font-family: 'Roboto', sans-serif;
-        resize: vertical;
-        min-height: 100px;
-        outline: none;
-        line-height: 1.5;
-        overflow-y: auto; /* Adiciona rolagem se o texto exceder o tamanho da caixa */
-        word-wrap: break-word; /* Garante que o texto quebre em palavras e não crie rolagem horizontal */
-    }
-
-    .bottom-section .comments button {
-        padding: 10px 20px;
-        background-color: #3498db;
-        color: #fff;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        font-size: 16px;
-        font-weight: bold;
-        transition: background-color 0.3s, box-shadow 0.3s;
-    }
-
-    .bottom-section .comments button:hover {
-        background-color: #2980b9;
-        box-shadow: 0 4px 8px rgba(41, 128, 185, 0.2);
-    }
-
-    .bottom-section .comments .comment {
-        padding: 10px;
-        border: 1px solid #e3e3e3;
-        border-radius: 5px;
-        margin-bottom: 10px;
-        background-color: rgba(255, 255, 255, 0.9); /* Comentário com fundo branco e 90% de opacidade */
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        box-sizing: border-box; /* Garante que o padding e border sejam incluídos na largura total */
-        word-wrap: break-word; /* Garante que o texto quebre em palavras e não crie rolagem horizontal */
-    }
-
-    .bottom-section .comments .comment-time {
-        display: block;
-        font-size: 0.8em;
-        color: #7f8c8d;
-        margin-top: 5px;
-    }
-
     </style>
 </head>
 <body>
@@ -504,15 +434,6 @@
             </div>
         </div>
     </div>
-
- <div class="bottom-section">
-    <div class="comments">
-        <textarea id="comment-input" placeholder="Digite seu comentário aqui..."></textarea>
-        <button id="add-comment-button">Adicionar Comentário</button>
-        <div id="comment-list"></div>
-    </div>
-</div>
-
 
     <script>
         function updateLinks() {
@@ -630,65 +551,6 @@
         function printPage() {
             window.print();
         }
-
-
-        // Import the functions you need from the SDKs you need
-import { initializeApp } from "https://www.gstatic.com/firebasejs/9.13.0/firebase-app.js";
-import { getFirestore, collection, addDoc, serverTimestamp, onSnapshot, query, orderBy } from "https://www.gstatic.com/firebasejs/9.13.0/firebase-firestore.js";
-
-// Your web app's Firebase configuration
-const firebaseConfig = {
-    apiKey: "AIzaSyCvUY430qTTGws9JrRKlOX_XDcIjWlIhNs",
-    authDomain: "hinote-ba944.firebaseapp.com",
-    projectId: "hinote-ba944",
-    storageBucket: "hinote-ba944.appspot.com",
-    messagingSenderId: "335882831565",
-    appId: "1:335882831565:web:b893b3d6cb4126a4458b84"
-};
-
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-
-async function addComment() {
-    const commentInput = document.getElementById('comment-input');
-    const commentText = commentInput.value.trim();
-
-    if (commentText) {
-        try {
-            await addDoc(collection(db, 'comments'), {
-                text: commentText,
-                timestamp: serverTimestamp()
-            });
-            commentInput.value = '';
-        } catch (e) {
-            console.error('Erro ao adicionar comentário: ', e);
-        }
-    }
-}
-
-function loadComments() {
-    const commentList = document.getElementById('comment-list');
-    const commentsQuery = query(collection(db, 'comments'), orderBy('timestamp', 'desc'));
-
-    onSnapshot(commentsQuery, (snapshot) => {
-        commentList.innerHTML = '';
-        snapshot.forEach((doc) => {
-            const comment = doc.data();
-            const commentElement = document.createElement('div');
-            commentElement.className = 'comment';
-            commentElement.textContent = comment.text;
-            commentList.appendChild(commentElement);
-        });
-    });
-}
-
-// Carrega os comentários ao iniciar a página
-window.onload = loadComments;
-
-document.getElementById('add-comment-button').addEventListener('click', addComment);
-
-
     </script>
 </body>
 </html>
